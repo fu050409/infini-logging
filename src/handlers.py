@@ -60,9 +60,7 @@ def log_handler(input: Input):
         next_id = len(loggers)
         active_loggers.add(next_id)
         loggers.add(next_id)
-        yield input.output(
-            "text", "log.new", variables={"sequence": next_id}
-        )
+        yield input.output("text", "log.new", variables={"sequence": next_id})
         status.set(session_id, "active_loggers", active_loggers)
         status.set(session_id, "loggers", loggers)
         return
@@ -124,7 +122,15 @@ def log_handler(input: Input):
         )
         return
 
-    yield input.output("text", "log.info", block=True)
+    yield input.output(
+        "text",
+        "log.info",
+        block=True,
+        variables={
+            "count": len(loggers),
+            "active_count": len(active_loggers),
+        },
+    )
 
 
 @register.handler(Command("kp", alias=["gm"]))

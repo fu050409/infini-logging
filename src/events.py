@@ -5,10 +5,13 @@ from infini.register import Register
 
 register = Register()
 
+register.register_variable("logging_version", "0.1.0-beta.1")
+
 
 register.register_textevent(
     "log.info",
-    "NoctisLogger 版本 0.1.0-alpha.1 [Infini 2.0.6 for DicerGirl 4.0.0-beta.2]",
+    "NoctisLogger 版本 {{ logging_version }} [Infini {{ infini_version }} for DicerGirl {{ version }}]\n"
+    "欢迎使用日志管理器, 当前会话共[{{ count }}]个日志序列, 其中共[{{ active_count }}]个活跃序列.",
 )
 register.register_textevent("log.new", "新增日志进程序列[{{ sequence }}]")
 register.register_textevent("log.start", "日志进程序列[{{ sequence }}]启动记录")
@@ -19,7 +22,7 @@ register.register_textevent(
 )
 register.register_textevent("log.error.not_found", "未找到日志进程序列[{{ sequence }}]")
 register.register_textevent(
-    "log.error.not_started", "日志进程序列[{{ sequence }}]未启动, 无法中止"
+    "log.error.not_started", "日志进程序列[{{ sequence }}]未启动, 忽略中止请求."
 )
 register.register_textevent("role.kp", "[{{ card_name }}]已进入主持人席位")
 register.register_textevent("role.kp.out", "[{{ card_name }}]已离开主持人席位")
