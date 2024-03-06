@@ -141,9 +141,17 @@ def kp_handler(input: Input):
     status = StatusPool.get("dicergirl")
 
     kps = status.get(session_id, "kp") or []
+    pls = status.get(session_id, "pl") or []
+    obs = status.get(session_id, "ob") or []
     if user_id not in kps:
         kps.append(user_id)
         status.set(session_id, "kp", kps)
+        if user_id in pls:
+            pls.remove(user_id)
+            status.set(session_id, "pl", pls)
+        if user_id in obs:
+            obs.remove(user_id)
+            status.set(session_id, "ob", obs)
         return input.output("text", "role.kp", block=True)
     else:
         kps.remove(user_id)
@@ -158,10 +166,18 @@ def pl_handler(input: Input):
 
     status = StatusPool.get("dicergirl")
 
+    kps = status.get(session_id, "kp") or []
     pls = status.get(session_id, "pl") or []
+    obs = status.get(session_id, "ob") or []
     if user_id not in pls:
         pls.append(user_id)
         status.set(session_id, "pl", pls)
+        if user_id in kps:
+            kps.remove(user_id)
+            status.set(session_id, "kp", kps)
+        if user_id in obs:
+            obs.remove(user_id)
+            status.set(session_id, "ob", obs)
         return input.output("text", "role.pl", block=True)
     else:
         pls.remove(user_id)
@@ -176,10 +192,18 @@ def ob_handler(input: Input):
 
     status = StatusPool.get("dicergirl")
 
+    kps = status.get(session_id, "kp") or []
+    pls = status.get(session_id, "pl") or []
     obs = status.get(session_id, "ob") or []
     if user_id not in obs:
         obs.append(user_id)
         status.set(session_id, "ob", obs)
+        if user_id in kps:
+            kps.remove(user_id)
+            status.set(session_id, "kp", kps)
+        if user_id in pls:
+            pls.remove(user_id)
+            status.set(session_id, "pl", pls)
         return input.output("text", "role.ob", block=True)
     else:
         obs.remove(user_id)
