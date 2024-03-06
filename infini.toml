@@ -1,0 +1,11 @@
+[infini]
+name = "logger"
+version = "0.1.0-alpha.1"
+description = "Logging for Infini"
+authors = []
+license = "Apache-2.0"
+
+[requirements]
+coc = "latest"
+
+[dependencies]
